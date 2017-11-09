@@ -1,0 +1,26 @@
+game:
+  gamename: Infected
+  arenasize: 2
+  version: '1.0'
+  description: InfectedGame
+  arenanaming: infected_map
+  settings:
+    minplayers: 3
+    maxplayers: 50
+    pregamecountdown: 30
+    endgametime: 20
+  scoreboards:
+    WAITING:
+    - '&fPlayers waiting: &a&l%players%'
+    WAITING_COUNTDOWN:
+    - '  '
+    - '&fPlayers waiting: &a&l%players%'
+    - ' '
+    - 'The game is starting in:'
+    - '&a%time% &fseconds!'
+    PREGAME_COUNTDOWN:
+    - ''
+    GAME:
+    - ''
+    END:
+    - ''

@@ -1,0 +1,6 @@
+name: GameManager
+version: 1.0
+author: nivyox
+main: com.nivyox.gamemanager.Core
+commands:
+  startgame:
