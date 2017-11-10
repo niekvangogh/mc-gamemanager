@@ -73,7 +73,6 @@ public class GameListener implements Listener {
             case PREGAME_COUNTDOWN:
                 if (time % 5 == 0 || time <= 5) {
                     if (time == 0) {
-                        game.broadcast("The game has begun!");
                         game.setGameState(GameState.GAME);
                         break;
                     } else if (time == 1) {

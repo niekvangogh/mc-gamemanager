@@ -152,7 +152,7 @@ public class Game {
     }
 
     public void finalizeGame() {
-        Bukkit.getOnlinePlayers().forEach(player -> player.teleport(Bukkit.getWorld((String) ConfigHandler.getValue(ConfigHandler.ConfigPaths.GAME_MAIN_LOBBY)).getSpawnLocation()));
+        this.getPlayers(Filter.ONLINE).forEach(player -> player.teleport(Bukkit.getWorld((String) ConfigHandler.getValue(ConfigHandler.ConfigPaths.GAME_MAIN_LOBBY)).getSpawnLocation()));
         arena.setState(ArenaState.AVAILABE);
         timertask.cancel();
         GameManager.removeGame(this);

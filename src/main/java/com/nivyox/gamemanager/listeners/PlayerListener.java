@@ -1,12 +1,18 @@
 package com.nivyox.gamemanager.listeners;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import com.nivyox.gamemanager.Core;
 import com.nivyox.gamemanager.games.Game;
 import com.nivyox.gamemanager.GameManager;
 import com.nivyox.gamemanager.games.RemoveReason;
 import com.nivyox.gamemanager.games.events.GamePlayerDamageEvent;
 import com.nivyox.gamemanager.games.events.GamePlayerDeathEvent;
 import com.nivyox.gamemanager.games.events.GamePlayerReconnectEvent;
+import com.nivyox.gamemanager.utils.PlayerUtils;
+import com.nivyox.gamemanager.utils.SkinType;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,15 +56,6 @@ public class PlayerListener implements Listener {
         Game game = GameManager.getGame(killed);
         if (game != null) {
             Bukkit.getPluginManager().callEvent(new GamePlayerDeathEvent(game, killed));
-        }
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        Game game = GameManager.getGame(player);
-        if (game != null) {
-            Bukkit.getPluginManager().callEvent(new GamePlayerReconnectEvent(game, player));
         }
     }
 

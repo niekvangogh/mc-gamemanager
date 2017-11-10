@@ -1,11 +1,14 @@
 package com.nivyox.gamemanager.games.arenas;
 
+import com.nivyox.gamemanager.Core;
 import com.nivyox.gamemanager.games.GameSpecifications;
 import com.nivyox.gamemanager.GameManager;
 import com.nivyox.gamemanager.games.arenas.exceptions.NoAvailableArenaException;
+import net.minecraft.server.v1_8_R3.WorldGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.generator.ChunkGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +53,6 @@ public class ArenaManager {
     }
 
     public static World createArena(String name) {
-        WorldCreator worldCreator = new WorldCreator(name);
-        return Bukkit.createWorld(worldCreator);
+        return Core.getInstance().getServer().createWorld(new WorldCreator(name));
     }
 }
