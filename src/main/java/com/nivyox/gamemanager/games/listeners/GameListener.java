@@ -53,7 +53,7 @@ public class GameListener implements Listener {
             case WAITING:
                 break;
             case WAITING_COUNTDOWN:
-                if (time % 5 == 0 || time <= 5) {
+                if (time % 15 == 0 || time <= 5) {
                     if (time == 0) {
                         game.setGameState(GameState.PREGAME_COUNTDOWN);
                         break;
@@ -66,7 +66,7 @@ public class GameListener implements Listener {
                 timer.setTime(time - 1);
                 break;
             case PREGAME_COUNTDOWN:
-                if (time % 5 == 0 || time <= 5) {
+                if (time % 15 == 0 || time <= 5) {
                     if (time == 0) {
                         game.setGameState(GameState.GAME);
                         break;
