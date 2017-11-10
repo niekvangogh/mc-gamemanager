@@ -13,11 +13,6 @@ import org.bukkit.generator.ChunkGenerator;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * Created by Niek on 1-7-2017.
- * This is project (DragonMemescape) has been made my Nivyox (https://twitter.com/nivyox).
- * If you want to reuse the code or make something using this code, please inform me. Credits appreciated.
- */
 public class ArenaManager {
 
     private static ArrayList<Arena> arenas = new ArrayList<>();

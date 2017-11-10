@@ -20,11 +20,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-/**
- * Created by Niek on 30-6-2017.
- * This is project (DragonMemescape) has been made my Nivyox (https://twitter.com/nivyox).
- * If you want to reuse the code or make something using this code, please inform me. Credits appreciated.
- */
 public class Game {
 
     private final ScoreboardsManager scoreboardManager;

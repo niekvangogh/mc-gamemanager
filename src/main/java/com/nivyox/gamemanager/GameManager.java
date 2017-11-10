@@ -23,11 +23,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-/**
- * Created by Niek on 30-6-2017.
- * This is project (DragonMemescape) has been made my Nivyox (https://twitter.com/nivyox).
- * If you want to reuse the code or make something using this code, please inform me. Credits appreciated.
- */
 public class GameManager {
 
     private static ArrayList<Game> games = new ArrayList<>();

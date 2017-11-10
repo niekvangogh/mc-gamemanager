@@ -5,11 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-/**
- * Created by Niek on 30-6-2017.
- * This is project (DragonMemescape) has been made my Nivyox (https://twitter.com/nivyox).
- * If you want to reuse the code or make something using this code, please inform me. Credits appreciated.
- */
+
 public class GamePlayerJoinEvent extends Event {
     private final Game game;
     private final Player player;

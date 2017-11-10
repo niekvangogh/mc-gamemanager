@@ -5,11 +5,7 @@ import com.nivyox.gamemanager.games.GameState;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-/**
- * Created by Niek on 1-7-2017.
- * This is project (DragonMemescape) has been made my Nivyox (https://twitter.com/nivyox).
- * If you want to reuse the code or make something using this code, please inform me. Credits appreciated.
- */
+
 public class GameStateChangeEvent extends Event {
     private final GameState newState;
     private final GameState oldState;
