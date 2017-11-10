@@ -33,7 +33,7 @@ public class GameListener implements Listener {
     @EventHandler
     public void gameStartEvent(GameStartEvent event) {
         Game game = event.getGame();
-        game.getPlayers().forEach((player, gamePlayerDetails) -> gamePlayerDetails.isAlive = true);
+        game.getGamePlayers().forEach((player, gamePlayerDetails) -> gamePlayerDetails.isAlive = true);
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -51,11 +51,8 @@ public class GameListener implements Listener {
         GameTimer timer = event.getGameTimer();
         Game game = timer.getGame();
         int time = timer.getTime();
-        for (UUID uuidPlayer : game.getPlayers().keySet()) {
-            if (Bukkit.getOfflinePlayer(uuidPlayer).isOnline()) {
-                game.getScoreboardManager().giveScoreboard(Bukkit.getPlayer(uuidPlayer));
-            }
-        }
+
+        game.getPlayers(Game.Filter.ONLINE).forEach(player -> player.setScoreboard(game.getScoreboard()));
 
         switch (game.getGameState()) {
             case WAITING:
@@ -88,7 +85,6 @@ public class GameListener implements Listener {
                 timer.setTime(time - 1);
                 break;
             case GAME:
-                timer.setTime(time + 1);
                 break;
             case END:
                 if (timer.getEndTime() + game.getGameSettings().endgameTime == time) {

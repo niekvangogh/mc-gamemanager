@@ -30,7 +30,6 @@ public class GamePlayerDamageEvent extends Event {
         return handlers;
     }
 
-
     public EntityDamageByEntityEvent getDamageEvent() {
         return damageEvent;
     }

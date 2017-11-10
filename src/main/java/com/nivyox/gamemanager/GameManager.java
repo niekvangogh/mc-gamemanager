@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -40,6 +41,7 @@ public class GameManager {
 
     public static void addGame(Game game) {
         games.add(game);
+        System.out.println(games.toString());
     }
 
     public static void removeGame(Game game) {
@@ -52,7 +54,7 @@ public class GameManager {
 
     public static Game getGame(UUID uuid) {
         for (Game game : games) {
-            for (UUID storedUuid : game.getPlayers().keySet()) {
+            for (UUID storedUuid : game.getGamePlayers().keySet()) {
                 if (storedUuid.toString().equals(uuid.toString())) {
                     return game;
                 }
@@ -77,7 +79,11 @@ public class GameManager {
     }
 
     public static Game createNewGame(GameSettings gameSettings) throws NoAvailableArenaException {
-        return new Game(gameSettings);
+        try {
+            return customGameClass.getConstructor(GameSettings.class).newInstance(gameSettings);
+        } catch (Exception e) {
+            return new Game(gameSettings);
+        }
     }
 
     public static Game createNewGame() throws NoAvailableArenaException {
@@ -122,4 +128,6 @@ public class GameManager {
     @Setter(AccessLevel.MODULE)
     private static JavaPlugin plugin;
 
+    @Setter
+    private static Class<? extends Game> customGameClass;
 }

@@ -62,7 +62,7 @@ public class ScoreboardsManager {
         s = s.replaceAll("%maxplayers%", String.valueOf(game.getGameSettings().maxPlayers));
         s = s.replaceAll("%aliveplayers%", String.valueOf(game.getAlivePlayers().size()));
         s = s.replaceAll("%requiredplayers%", String.valueOf(game.getGameSettings().minPlayers));
-        s = s.replaceAll("%onlineplayers%", String.valueOf(game.getOnlinePlayers().size()));
+        s = s.replaceAll("%onlineplayers%", String.valueOf(game.getPlayers().size()));
         return s;
     }
 }

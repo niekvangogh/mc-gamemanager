@@ -31,10 +31,7 @@ public class PlayerListener implements Listener {
         Game currentGame = GameManager.getGame(player);
         if (currentGame != null) {
             event.getRecipients().clear();
-
-            for (UUID uuid : currentGame.getPlayers().keySet()) {
-                event.getRecipients().add(Bukkit.getPlayer(uuid));
-            }
+            currentGame.getPlayers().forEach(gamePlayer -> event.getRecipients().add(gamePlayer));
         }
     }
 

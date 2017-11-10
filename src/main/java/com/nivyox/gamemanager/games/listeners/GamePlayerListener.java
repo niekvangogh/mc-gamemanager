@@ -77,10 +77,10 @@ public class GamePlayerListener implements Listener {
 
         if (removeReason == RemoveReason.LEFT || removeReason == RemoveReason.NO_SPACE_AFTER_RECONNECT) {
             GameManager.getInstance().getLogger().info(player.getName() + " has been removed from the game since it was full");
-            game.getPlayers().remove(player.getUniqueId());
+            game.getGamePlayers().remove(player.getUniqueId());
         }
         if (game.getGameState() == GameState.PREGAME_COUNTDOWN) {
-            if (game.getGameSettings().minPlayers >= game.getOnlinePlayers().size()) {
+            if (game.getGameSettings().minPlayers >= game.getPlayers().size()) {
                 game.setGameState(GameState.WAITING);
                 game.broadcast("The countdown has been stopped because there are not enough players in the game!");
             }

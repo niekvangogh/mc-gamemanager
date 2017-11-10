@@ -9,12 +9,14 @@ import com.nivyox.gamemanager.games.events.*;
 import com.nivyox.gamemanager.scoreboards.ScoreboardsManager;
 import com.nivyox.gamemanager.utils.ConfigHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -55,6 +57,26 @@ public class Game {
         Bukkit.getPluginManager().callEvent(gamePlayerJoinEvent);
     }
 
+    public ArrayList<Player> getPlayers() {
+        return (ArrayList<Player>) getPlayers(Filter.NONE);
+    }
+
+    public List<Player> getPlayers(Filter filter) {
+        ArrayList<Player> players = new ArrayList<>();
+        switch (filter) {
+            case NONE:
+                this.players.keySet().forEach(player -> players.add(Bukkit.getPlayer(player)));
+                break;
+            case ONLINE:
+                return this.getPlayers().stream().filter(OfflinePlayer::isOnline).collect(Collectors.toList());
+        }
+        return players;
+    }
+
+    public enum Filter {
+        ONLINE, NONE
+    }
+
     public void removePlayer(Player player, RemoveReason removereason) {
         GamePlayerRemoveEvent gamePlayerRemoveEvent = new GamePlayerRemoveEvent(this, player, removereason);
         Bukkit.getPluginManager().callEvent(gamePlayerRemoveEvent);
@@ -71,7 +93,7 @@ public class Game {
         setGameState(GameState.WAITING_COUNTDOWN);
     }
 
-    public HashMap<UUID, GamePlayerDetails> getPlayers() {
+    public HashMap<UUID, GamePlayerDetails> getGamePlayers() {
         return players;
     }
 
@@ -116,10 +138,6 @@ public class Game {
 
     public GamePlayerDetails getPlayer(Player player) {
         return players.get(player.getUniqueId());
-    }
-
-    public ArrayList<UUID> getOnlinePlayers() {
-        return this.getPlayers().keySet().stream().filter(uuid -> Bukkit.getOfflinePlayer(uuid).isOnline()).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void endGame(UUID winningUUID, EndReason endReason) {
