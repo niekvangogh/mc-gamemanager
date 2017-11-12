@@ -11,20 +11,32 @@ game:
     endgametime: 20
   scoreboards:
     WAITING:
-    - '&fPlayers waiting: &a&l%players%'
-    WAITING_COUNTDOWN:
-    - '  '
-    - '&fPlayers waiting: &a&l%players%'
     - ' '
+    - '&fPlayers waiting: &a&l%players%'
+    - '  '
+    WAITING_COUNTDOWN:
+    - ' '
+    - '&fPlayers waiting: &a&l%players%'
+    - '  '
     - 'The game is starting in:'
     - '&a&a%time%&r &fseconds!'
+    - '   '
     PREGAME_COUNTDOWN:
-    - '  '
-    - '&fPlayers waiting: &a&l%players%'
     - ' '
+    - '&fPlayers waiting: &a&l%players%'
+    - '  '
     - 'The game is starting in:'
-    - '&a%time% &fseconds!'
+    - '&a&l%time%&r &fseconds!'
+    - '   '
     GAME:
-    - ''
+    - ' '
+    - '&fSurvivors alive: &a&l%alive%'
+    - '  '
+    - '&fTime left: &a&l%timeleft%'
+    - '   '
+    - '&fSurvivor kills: &a&l%survivorkills%'
+    - '&fInfected kills: &a&l%infectedkills%'
+    - '    '
+    - '     '
     END:
     - ''

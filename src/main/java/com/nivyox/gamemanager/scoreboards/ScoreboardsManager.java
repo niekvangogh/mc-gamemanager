@@ -28,17 +28,12 @@ public class ScoreboardsManager {
 
         if (game.getScoreboard().getObjective("sidebar") == null) {
             Objective sidebar = game.getScoreboard().registerNewObjective("sidebar", "dummy");
-            sidebar.setDisplayName(ChatColor.YELLOW + GameSpecifications.getGamename());
+            sidebar.setDisplayName(ChatColor.YELLOW.toString() + ChatColor.BOLD + GameSpecifications.getGamename().toUpperCase());
             sidebar.setDisplaySlot(DisplaySlot.SIDEBAR);
         }
     }
 
     public void giveScoreboard(Player player) {
-        updateSidebar();
-        player.setScoreboard(game.getScoreboard());
-    }
-
-    private void updateSidebar() {
         Objective sidebar = game.getScoreboard().getObjective("sidebar");
         sidebar.unregister();
         sidebar = game.getScoreboard().registerNewObjective("sidebar", "dummy");
@@ -48,13 +43,14 @@ public class ScoreboardsManager {
         ArrayList<String> items = scoreboardTemplate.get(game.getGameState().name());
 
         for (int i = 0; i < items.size(); i++) {
-            sidebar.getScore(ChatColor.translateAlternateColorCodes('&', replaceValues(items.get(i)))).setScore(i);
+            sidebar.getScore(ChatColor.translateAlternateColorCodes('&', replaceValues(items.get(i), player))).setScore(i);
         }
+
+        player.setScoreboard(game.getScoreboard());
     }
 
-
-    private String replaceValues(String s) {
-        ArrayList<ScoreboardReplacement> replacements = game.getScoreboardReplacements();
+    private String replaceValues(String s, Player player) {
+        ArrayList<ScoreboardReplacement> replacements = game.getScoreboardReplacements(player);
         for (ScoreboardReplacement replacement : replacements) {
             s = s.replaceAll(replacement.getSearch(), String.valueOf(replacement.getReplacement()));
         }

@@ -47,7 +47,7 @@ public abstract class Game {
     }
 
     public void addPlayer(Player player) {
-        this.players.put(player.getUniqueId(), new GamePlayerDetails(player));
+        this.players.put(player.getUniqueId(), new GamePlayerDetails());
         GamePlayerJoinEvent gamePlayerJoinEvent = new GamePlayerJoinEvent(this, player);
         Bukkit.getPluginManager().callEvent(gamePlayerJoinEvent);
     }
@@ -71,7 +71,7 @@ public abstract class Game {
     public abstract void endGame(ArrayList<Player> players, EndReason endReason);
 
 
-    public abstract ArrayList<ScoreboardReplacement> getScoreboardReplacements();
+    public abstract ArrayList<ScoreboardReplacement> getScoreboardReplacements(Player player);
 
     public enum Filter {
         ONLINE, NONE

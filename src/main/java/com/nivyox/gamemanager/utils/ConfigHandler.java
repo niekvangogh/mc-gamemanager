@@ -15,7 +15,7 @@ public class ConfigHandler {
     }
 
     public static List<Location> getLocation(ConfigPaths path, Arena arena) {
-        return (List<Location>) getConfig().getList(path.toString().replace("%%arenaname%%", arena.getWorld().getName()));
+        return (List<Location>) getConfig().getList(path.toString().replace("%%arenaname%%", arena.getWorld().getName()), null);
     }
 
     public static Object getValue(ConfigPaths path) {

@@ -1,13 +1,35 @@
 package com.nivyox.gamemanager.games;
 
-import org.bukkit.entity.Player;
+import java.util.HashMap;
 
 public class GamePlayerDetails {
-    private final Player players;
     public boolean isAlive;
     public boolean isSpectator;
-    
-    public GamePlayerDetails(Player player) {
-        this.players = player;
+
+
+    private HashMap<String, Object> custom = new HashMap<>();
+
+
+    public GamePlayerDetails() {
+    }
+
+    public void set(String key, Object value) {
+        custom.put(key, value);
+    }
+
+    public Object get(String key) {
+        return custom.get(key);
+    }
+
+    public void addOneTo(String key) {
+        int value = (int) custom.get(key);
+        value++;
+        custom.replace(key, value);
+    }
+
+    public void removeOneFrom(String key) {
+        int value = (int) custom.get(key);
+        value--;
+        custom.replace(key, value);
     }
 }

@@ -16,9 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.ScoreboardManager;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -36,7 +34,6 @@ public class GameManager {
 
     public static void addGame(Game game) {
         games.add(game);
-        System.out.println(games.toString());
     }
 
     public static void removeGame(Game game) {
@@ -73,7 +70,7 @@ public class GameManager {
         }
     }
 
-    public static Game createNewGame(GameSettings gameSettings) throws NoAvailableArenaException {
+    private static Game createNewGame(GameSettings gameSettings) throws NoAvailableArenaException {
         try {
             return customGameClass.getConstructor(GameSettings.class).newInstance(gameSettings);
         } catch (Exception e) {
@@ -84,7 +81,7 @@ public class GameManager {
                 }
 
                 @Override
-                public ArrayList<ScoreboardReplacement> getScoreboardReplacements() {
+                public ArrayList<ScoreboardReplacement> getScoreboardReplacements(Player player) {
                     ArrayList<ScoreboardReplacement> items = new ArrayList<>();
                     items.add(new ScoreboardReplacement("%time%", DateUtilsMeme.getTimeFromSeconds(this.getGameTimer().getTime())));
                     items.add(new ScoreboardReplacement("%players%", this.getPlayers(Game.Filter.ONLINE).size()));
@@ -95,7 +92,7 @@ public class GameManager {
         }
     }
 
-    public static Game createNewGame() throws NoAvailableArenaException {
+    private static Game createNewGame() throws NoAvailableArenaException {
         return createNewGame(new GameSettings());
     }
 
