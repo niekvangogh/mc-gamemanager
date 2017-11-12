@@ -6,5 +6,5 @@ package com.nivyox.gamemanager.games;
  * If you want to reuse the code or make something using this code, please inform me. Credits appreciated.
  */
 public enum EndReason {
-    CRASH, PLAYER_WIN
+    CRASH, WON, NOPLAYERS
 }

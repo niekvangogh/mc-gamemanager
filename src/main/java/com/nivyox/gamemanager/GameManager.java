@@ -1,15 +1,14 @@
 package com.nivyox.gamemanager;
 
-import com.nivyox.gamemanager.games.Game;
-import com.nivyox.gamemanager.games.GameSettings;
-import com.nivyox.gamemanager.games.GameSpecifications;
-import com.nivyox.gamemanager.games.GameState;
+import com.nivyox.gamemanager.games.*;
 import com.nivyox.gamemanager.games.arenas.ArenaManager;
 import com.nivyox.gamemanager.games.arenas.exceptions.NoAvailableArenaException;
 import com.nivyox.gamemanager.games.exceptions.NoAvailableGamesException;
 import com.nivyox.gamemanager.games.listeners.GameListener;
 import com.nivyox.gamemanager.games.listeners.GamePlayerListener;
 import com.nivyox.gamemanager.listeners.PlayerListener;
+import com.nivyox.gamemanager.scoreboards.ScoreboardReplacement;
+import com.nivyox.gamemanager.utils.DateUtilsMeme;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -77,7 +77,21 @@ public class GameManager {
         try {
             return customGameClass.getConstructor(GameSettings.class).newInstance(gameSettings);
         } catch (Exception e) {
-            return new Game(gameSettings);
+
+            return new Game(gameSettings) {
+                @Override
+                public void endGame(ArrayList<Player> players, EndReason endReason) {
+                }
+
+                @Override
+                public ArrayList<ScoreboardReplacement> getScoreboardReplacements() {
+                    ArrayList<ScoreboardReplacement> items = new ArrayList<>();
+                    items.add(new ScoreboardReplacement("%time%", DateUtilsMeme.getTimeFromSeconds(this.getGameTimer().getTime())));
+                    items.add(new ScoreboardReplacement("%players%", this.getPlayers(Game.Filter.ONLINE).size()));
+                    items.add(new ScoreboardReplacement("%maxplayers%", this.getGameSettings().maxPlayers));
+                    return items;
+                }
+            };
         }
     }
 

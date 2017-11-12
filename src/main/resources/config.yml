@@ -17,9 +17,13 @@ game:
     - '&fPlayers waiting: &a&l%players%'
     - ' '
     - 'The game is starting in:'
-    - '&a%time% &fseconds!'
+    - '&a&a%time%&r &fseconds!'
     PREGAME_COUNTDOWN:
-    - ''
+    - '  '
+    - '&fPlayers waiting: &a&l%players%'
+    - ' '
+    - 'The game is starting in:'
+    - '&a%time% &fseconds!'
     GAME:
     - ''
     END:

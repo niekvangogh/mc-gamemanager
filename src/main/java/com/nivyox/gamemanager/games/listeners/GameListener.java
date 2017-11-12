@@ -1,20 +1,14 @@
 package com.nivyox.gamemanager.games.listeners;
 
-import com.nivyox.gamemanager.games.Game;
 import com.nivyox.gamemanager.GameManager;
+import com.nivyox.gamemanager.games.Game;
 import com.nivyox.gamemanager.games.GameState;
 import com.nivyox.gamemanager.games.GameTimer;
 import com.nivyox.gamemanager.games.events.*;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.scoreboard.Team;
-
-import java.util.ArrayList;
-import java.util.UUID;
 
 public class GameListener implements Listener {
 
@@ -47,7 +41,7 @@ public class GameListener implements Listener {
         Game game = timer.getGame();
         int time = timer.getTime();
 
-        game.getPlayers(Game.Filter.ONLINE).forEach(player -> player.setScoreboard(game.getScoreboard()));
+        game.getPlayers(Game.Filter.ONLINE).forEach(player -> game.getScoreboardManager().giveScoreboard(player));
 
         switch (game.getGameState()) {
             case WAITING:

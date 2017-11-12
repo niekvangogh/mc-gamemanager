@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.UUID;
 
@@ -36,10 +37,6 @@ public class GamePlayerListener implements Listener {
         Player player = event.getPlayer();
         game.getPlayer(player).isAlive = false;
         game.getPlayer(player).isSpectator = true;
-        if (game.getAlivePlayers().size() == 1) {
-            UUID winningUUID = game.getAlivePlayers().get(0);
-            game.endGame(winningUUID, EndReason.PLAYER_WIN);
-        }
     }
 
     @EventHandler
@@ -81,7 +78,7 @@ public class GamePlayerListener implements Listener {
             }
             game.broadcast(player.getDisplayName() + " has quit!");
         } else {
-            Bukkit.getPluginManager().callEvent(new GamePlayerDeathEvent(game, player));
+            Bukkit.getPluginManager().callEvent(new GamePlayerDeathEvent(game, player, null));
         }
     }
 }

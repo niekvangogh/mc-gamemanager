@@ -40,7 +40,7 @@ public class PlayerListener implements Listener {
         Player killed = event.getEntity();
         Game game = GameManager.getGame(killed);
         if (game != null) {
-            Bukkit.getPluginManager().callEvent(new GamePlayerDeathEvent(game, killed));
+            Bukkit.getPluginManager().callEvent(new GamePlayerDeathEvent(game, killed, event));
         }
     }
 

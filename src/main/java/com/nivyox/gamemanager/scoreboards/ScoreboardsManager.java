@@ -4,6 +4,7 @@ import com.nivyox.gamemanager.games.Game;
 import com.nivyox.gamemanager.games.GameSpecifications;
 import com.nivyox.gamemanager.utils.ConfigHandler;
 import com.nivyox.gamemanager.utils.DateUtilsMeme;
+import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -24,6 +25,7 @@ public class ScoreboardsManager {
         this.scoreboardTemplate = (Map<String, ArrayList<String>>) ConfigHandler.getConfigSection(ConfigHandler.ConfigPaths.GAME_SCOREBOARD_TEMPLATES);
         this.scoreboardTemplate.forEach((s, strings) -> Collections.reverse(strings));
 
+
         if (game.getScoreboard().getObjective("sidebar") == null) {
             Objective sidebar = game.getScoreboard().registerNewObjective("sidebar", "dummy");
             sidebar.setDisplayName(ChatColor.YELLOW + GameSpecifications.getGamename());
@@ -33,7 +35,6 @@ public class ScoreboardsManager {
 
     public void giveScoreboard(Player player) {
         updateSidebar();
-
         player.setScoreboard(game.getScoreboard());
     }
 
@@ -51,13 +52,12 @@ public class ScoreboardsManager {
         }
     }
 
+
     private String replaceValues(String s) {
-        s = s.replaceAll("%time%", DateUtilsMeme.getTimeFromSeconds(game.getGameTimer().getTime()));
-        s = s.replaceAll("%players%", String.valueOf(game.getPlayers().size()));
-        s = s.replaceAll("%maxplayers%", String.valueOf(game.getGameSettings().maxPlayers));
-        s = s.replaceAll("%aliveplayers%", String.valueOf(game.getAlivePlayers().size()));
-        s = s.replaceAll("%requiredplayers%", String.valueOf(game.getGameSettings().minPlayers));
-        s = s.replaceAll("%onlineplayers%", String.valueOf(game.getPlayers().size()));
+        ArrayList<ScoreboardReplacement> replacements = game.getScoreboardReplacements();
+        for (ScoreboardReplacement replacement : replacements) {
+            s = s.replaceAll(replacement.getSearch(), String.valueOf(replacement.getReplacement()));
+        }
         return s;
     }
 }

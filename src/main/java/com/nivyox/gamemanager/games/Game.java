@@ -6,6 +6,7 @@ import com.nivyox.gamemanager.games.arenas.ArenaManager;
 import com.nivyox.gamemanager.games.arenas.ArenaState;
 import com.nivyox.gamemanager.games.arenas.exceptions.NoAvailableArenaException;
 import com.nivyox.gamemanager.games.events.*;
+import com.nivyox.gamemanager.scoreboards.ScoreboardReplacement;
 import com.nivyox.gamemanager.scoreboards.ScoreboardsManager;
 import com.nivyox.gamemanager.utils.ConfigHandler;
 import org.bukkit.Bukkit;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class Game {
+public abstract class Game {
 
     private final ScoreboardsManager scoreboardManager;
     private GameSettings gameSettings;
@@ -38,12 +39,11 @@ public class Game {
         this.arena.setState(ArenaState.IN_USE);
         this.gameTimer = new GameTimer(this);
         this.gameState = GameState.WAITING;
-
         GameCreateEvent gameCreateEvent = new GameCreateEvent(this);
         Bukkit.getPluginManager().callEvent(gameCreateEvent);
 
-
         this.scoreboardManager = new ScoreboardsManager(this);
+
     }
 
     public void addPlayer(Player player) {
@@ -68,6 +68,11 @@ public class Game {
         return players;
     }
 
+    public abstract void endGame(ArrayList<Player> players, EndReason endReason);
+
+
+    public abstract ArrayList<ScoreboardReplacement> getScoreboardReplacements();
+
     public enum Filter {
         ONLINE, NONE
     }
@@ -81,7 +86,7 @@ public class Game {
         if (timertask != null) {
             timertask.cancel();
         }
-        this.timertask = Bukkit.getScheduler().runTaskTimer(GameManager.getPlugin(), getGameTimer(), 20, 20);
+        this.timertask = Bukkit.getScheduler().runTaskTimer(GameManager.getPlugin(), getGameTimer(), 0, 20);
         getGameTimer().setTime(getGameSettings().pregameCountdown);
         GameStartEvent gameStartEvent = new GameStartEvent(this);
         Bukkit.getPluginManager().callEvent(gameStartEvent);
@@ -135,17 +140,6 @@ public class Game {
         return players.get(player.getUniqueId());
     }
 
-    public void endGame(UUID winningUUID, EndReason endReason) {
-        Player winningPlayer = Bukkit.getPlayer(winningUUID);
-        if (endReason == EndReason.PLAYER_WIN) {
-            this.broadcast(winningPlayer.getDisplayName() + " has won the game!");
-            gameTimer.endTime = gameTimer.getTime();
-            setGameState(GameState.END);
-        } else if (endReason == EndReason.CRASH) {
-            finalizeGame();
-        }
-    }
-
     public void finalizeGame() {
         this.getPlayers(Filter.ONLINE).forEach(player -> player.teleport(Bukkit.getWorld((String) ConfigHandler.getValue(ConfigHandler.ConfigPaths.GAME_MAIN_LOBBY)).getSpawnLocation()));
         arena.setState(ArenaState.AVAILABE);
@@ -160,4 +154,5 @@ public class Game {
     public void setScoreboard(Scoreboard scoreboard) {
         this.scoreboard = scoreboard;
     }
+
 }
