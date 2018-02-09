@@ -2,4 +2,4 @@
 Gamemanager for bukkit/spigot
 
 
-I you are willing to use this code, give credits.
+If you are using this code, give credits pls.
